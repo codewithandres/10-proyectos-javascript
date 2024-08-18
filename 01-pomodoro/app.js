@@ -65,7 +65,7 @@ const startButtonHandler = (id) => {
 	const taskIndex = tasks.findIndex((task) => task.id === id);
 
 	taskName.textContent = tasks[taskIndex].title;
-
+	renderTime();
 	timer = setInterval(() => timeHandler(id), 1000);
 };
 
@@ -85,6 +85,7 @@ const timeHandler = (id) => {
 const starBreack = () => {
 	time = 3;
 	taskName.textContent = 'Break';
+	renderTime();
 	timerBreak = setInterval(() => timerBreakHandler(), 1000);
 };
 
