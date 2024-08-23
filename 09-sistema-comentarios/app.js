@@ -1,13 +1,13 @@
 let tags = [];
+
 const inputTagContainer = document.querySelector('#input-tag');
 const tagsContainer = document.createElement('div');
 const inputTag = document.createElement('span');
 
-inputTagContainer.addEventListener('click', e => {
-	console.log(e.target.id);
+inputTagContainer.addEventListener('click', event => {
 	if (
-		e.target.id === 'input-tag' ||
-		e.target.classList.contains('tag-container')
+		event.target.id === 'input-tag' ||
+		event.target.classList.contains('tag-container')
 	) {
 		inputTag.focus();
 	}
@@ -15,6 +15,7 @@ inputTagContainer.addEventListener('click', e => {
 
 inputTag.ariaRoleDescription = 'textbox';
 inputTag.contentEditable = 'true';
+
 inputTag.classList.add('input');
 inputTag.focus();
 
@@ -24,17 +25,19 @@ tagsContainer.classList.add('tag-container');
 inputTagContainer.appendChild(tagsContainer);
 tagsContainer.appendChild(inputTag);
 
-inputTag.addEventListener('keydown', e => {
-	debugger;
-	if (e.key === 'Enter' && inputTag.textContent !== '') {
-		e.preventDefault();
+inputTag.addEventListener('keydown', event => {
+	if (event.key === 'Enter' && inputTag.textContent !== '') {
+		event.preventDefault();
+
 		if (!existTag(inputTag.textContent)) {
 			tags.push(inputTag.textContent);
+
 			inputTag.textContent = '';
+
 			renderTags();
 		}
 	} else if (
-		e.key === 'Backspace' &&
+		event.key === 'Backspace' &&
 		inputTag.textContent === '' &&
 		tags.length > 0
 	) {
@@ -43,33 +46,35 @@ inputTag.addEventListener('keydown', e => {
 	}
 });
 
-function renderTags() {
+const renderTags = () => {
 	tagsContainer.innerHTML = '';
+
 	const html = tags.map(tag => {
 		const tagElement = document.createElement('div');
 		const tagButton = document.createElement('button');
+
 		tagElement.classList.add('tag-item');
 		tagButton.textContent = 'X';
-		tagButton.addEventListener('click', e => {
-			removeTag(tag);
-		});
+
+		tagButton.addEventListener('click', event => removeTag(tag));
+
 		tagElement.appendChild(document.createTextNode(tag));
 		tagElement.appendChild(tagButton);
+
 		return tagElement;
 	});
 
-	html.forEach(element => {
-		tagsContainer.appendChild(element);
-	});
+	html.forEach(element => tagsContainer.appendChild(element));
+
 	tagsContainer.appendChild(inputTag);
+
 	inputTag.focus();
-}
+};
 
-function existTag(value) {
-	return tags.includes(value);
-}
+const existTag = value => tags.includes(value);
 
-function removeTag(value) {
+const removeTag = value => {
 	tags = tags.filter(tag => tag != value);
+
 	renderTags();
-}
+};
