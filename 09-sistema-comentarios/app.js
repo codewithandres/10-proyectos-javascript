@@ -3,11 +3,7 @@ let tags = [];
 
 // Seleccionar el contenedor del input de etiquetas
 const inputTagContainer = document.querySelector('#input-tag');
-
-// Crear un div para contener las etiquetas
 const tagsContainer = document.createElement('div');
-
-// Crear un span para el input de etiquetas
 const inputTag = document.createElement('span');
 
 // Agregar evento de clic al contenedor del input de etiquetas
