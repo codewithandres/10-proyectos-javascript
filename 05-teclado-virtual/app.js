@@ -1,3 +1,6 @@
+// Virtual Keyboard Application
+// This script creates an interactive virtual keyboard with multiple layers and special keys
+
 const keys = [
 	[
 		['1', '!'],
@@ -59,10 +62,12 @@ const keys = [
 	[['SPACE', 'SPACE']],
 ];
 
+// State variables for keyboard
 let shift = false;
 let mayus = false;
 let current = null;
 
+// Function to render the keyboard
 const renderKeyboard = () => {
 	const keyboardContainer = document.querySelector('#keyboard-container');
 
@@ -100,10 +105,12 @@ const renderKeyboard = () => {
 
 	keyboardContainer.innerHTML = '';
 
+	// Append each layer to the keyboard container
 	htmlLayers.forEach((layer) => {
 		keyboardContainer.innerHTML += `<div class="layer">${layer}</div>`;
 	});
 
+	// Add click event listeners to each key
 	document.querySelectorAll('.key').forEach((key) => {
 		key.addEventListener('click', (e) => {
 			if (current) {
@@ -111,11 +118,13 @@ const renderKeyboard = () => {
 				else if (key.textContent === 'MAYUS') mayus = !mayus;
 				else if (key.textContent === '') current.value += ' ';
 				else {
+	// Add focus event listeners to input fields
 					current.value += key.textContent;
 					if (shift) shift = false;
 				}
 
 				current.focus();
+// Initial render of the keyboard
 				renderKeyboard();
 			}
 		});

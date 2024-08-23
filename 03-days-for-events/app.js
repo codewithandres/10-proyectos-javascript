@@ -1,16 +1,23 @@
+// Event Countdown Application
+// This application allows users to add events and displays the number of days until each event
+
+// Arrays to store events
 let events = [];
 let arr = [];
 
+// DOM element selections
 const eventName = document.querySelector('#event-name');
 const eventDate = document.querySelector('#event-date');
 const eventButton = document.querySelector('#event-add');
 const eventContainer = document.querySelector('.event-container');
 
+// Event listener for form submission
 document.querySelector('form').addEventListener('submit', (event) => {
 	event.preventDefault();
 	addEvent();
 });
 
+// Function to add a new event
 const addEvent = () => {
 	if (eventName.value === '' || eventDate.value === '') return;
 
@@ -31,6 +38,7 @@ const addEvent = () => {
 	renderEvents();
 };
 
+// Function to calculate the number of days between two dates
 const dateDiff = (date) => {
 	const targetDate = new Date(date);
 	const todays = new Date();
@@ -41,6 +49,7 @@ const dateDiff = (date) => {
 	return days;
 };
 
+// Function to render events in the DOM
 const renderEvents = () => {
 	const eventsHTML = events.map((event) => {
 		return `
@@ -53,6 +62,7 @@ const renderEvents = () => {
                 <div class="event-name">${event.name}</div>
                 <div class="event-date">${event.date}</div>
 
+	// Add event listeners to delete buttons
                 <div class="actions" >
                     <button class="button-delete" data-id="${
 						event.id
@@ -74,14 +84,16 @@ const renderEvents = () => {
 	});
 };
 
+// Function to save events to local storage
 const save = (data) => {
 	localStorage.setItem('items', data);
 };
 
+// Function to load events from local storage
 const load = () => localStorage.getItem('items');
 const json = load();
 try {
-	arr = JSON.stringify(json);
+	arr = JSON.stringify(json); // This line might cause an error, consider using JSON.parse(json) instead
 } catch (error) {
 	arr = [];
 }
@@ -89,3 +101,5 @@ try {
 events = arr ? [...arr] : [];
 
 renderEvents();
+events = arr ? [...arr] : []; // This line might not work as expected due to the potential error above
+// Initial render of events
